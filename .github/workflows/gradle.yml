@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         env:
-          - IDEA_VERSION: IU-2017.3.6,
+          - IDEA_VERSION: IU-2017.3.6
             ENABLE_JAVA_PLUGIN: false
           - IDEA_VERSION: IU-2018.1.8
             ENABLE_JAVA_PLUGIN: false
