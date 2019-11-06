@@ -29,11 +29,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8  
-    - name: Set ideaVersion
-      run: sed -i '/ideaVersion=/c\ideaVersion='"$IDEA_VERSION"'' gradle.properties
-      env: ${{ matrix.env }}
     - name: Patch build file
       run: if $ENABLE_JAVA_PLUGIN; then sed -i 's/\/\*, "java"\*\//, "java"/' build.gradle.kts; fi
       env: ${{ matrix.env }}
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew build -PideaVersion=${IDEA_VERSION}
+      env: ${{ matrix.env }}
