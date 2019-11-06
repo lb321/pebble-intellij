@@ -10,13 +10,18 @@ jobs:
     strategy:
       matrix:
         env:
-          - IDEA_VERSION=IU-2017.3.6 ENABLE_JAVA_PLUGIN=false
-          - IDEA_VERSION=IU-2018.1.8 ENABLE_JAVA_PLUGIN=false
-          - IDEA_VERSION=IU-2018.2.8 ENABLE_JAVA_PLUGIN=false
-          - IDEA_VERSION=IU-2018.3.6 ENABLE_JAVA_PLUGIN=false
-          - IDEA_VERSION=IU-2019.1.3 ENABLE_JAVA_PLUGIN=false
-          - IDEA_VERSION=IU-2019.2.3
-          - IDEA_VERSION=IU-193-EAP-SNAPSHOT
+          - IDEA_VERSION: IU-2017.3.6,
+            ENABLE_JAVA_PLUGIN: false
+          - IDEA_VERSION: IU-2018.1.8
+            ENABLE_JAVA_PLUGIN: false
+          - IDEA_VERSION: IU-2018.2.8
+            ENABLE_JAVA_PLUGIN: false
+          - IDEA_VERSION: IU-2018.3.6 
+            ENABLE_JAVA_PLUGIN: false
+          - IDEA_VERSION: IU-2019.1.3
+            ENABLE_JAVA_PLUGIN: false
+          - IDEA_VERSION: IU-2019.2.3
+          - IDEA_VERSION: IU-193-EAP-SNAPSHOT
               
     steps:
     - uses: actions/checkout@v1
