@@ -4,6 +4,7 @@ import com.github.bjansen.intellij.pebble.psi.PebbleParserDefinition.Companion.r
 import com.github.bjansen.pebble.parser.PebbleParser
 import com.intellij.lang.ASTNode
 import com.intellij.psi.*
+import com.intellij.psi.impl.source.tree.LeafPsiElement
 import com.intellij.psi.scope.PsiScopeProcessor
 import com.intellij.psi.search.GlobalSearchScope
 import org.antlr.intellij.adaptor.psi.ScopeNode
@@ -25,11 +26,23 @@ class PebbleForTag(node: ASTNode) : PebblePsiElement(node), ScopeNode {
         }
 
         getVariable()?.let {
-            val javaObject = PsiType.getJavaLangObject(
-                PsiManager.getInstance(containingFile.project),
-                GlobalSearchScope.projectScope(containingFile.project)
+            var prevSibling: PsiElement? = this.prevSibling;
+
+            while (prevSibling != null && prevSibling is LeafPsiElement && prevSibling.textContains('\n')) {
+                prevSibling = prevSibling.prevSibling;
+            }
+
+            if(prevSibling != null && prevSibling is PebbleComment && it.text == prevSibling.name) {
+                return true;
+            }
+
+            val variableType = PsiType.getJavaLangObject(
+                    PsiManager.getInstance(containingFile.project),
+                    GlobalSearchScope.projectScope(containingFile.project)
             )
-            val implicitVar = PebbleImplicitVariable(it.text, javaObject, this, null)
+
+
+            val implicitVar = PebbleImplicitVariable(it.text, variableType, this, null)
 
             if (!processor.execute(implicitVar, state)) {
                 return false
